@@ -11,13 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('evento', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
+            //data do eevento:tpo data
+            $table->date('data');
+            //descriçao : tipo texto
+            $table->text('descriçao');
+            //Hora inicial: hora
+            $table->time('inicio');
+            //hora final: hora
+            $table->time('final');
+            //contato: text
+            $table->string('contato');
+            //realizado: booleano
+            $table->boolean('realizado');
             $table->timestamps();
         });
 
