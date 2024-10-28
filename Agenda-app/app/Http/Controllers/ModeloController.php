@@ -14,6 +14,8 @@ class ModeloController extends Controller
     public function index()
     {
         //
+        $eventos = Evento::all();
+        return view ('eventos.index');
     }
 
     /**
@@ -22,6 +24,7 @@ class ModeloController extends Controller
     public function create()
     {
         //
+        return view ('eventos.create');
     }
 
     /**
@@ -30,6 +33,18 @@ class ModeloController extends Controller
     public function store(StoreModeloRequest $request)
     {
         //
+        Evento::create(request->all());
+        return redirect()->route('eventos.index')
+        ->with('success', 'Evento criado com sucesso');
+
+        $request->merge([
+            'realizado' => $request->has('realizado') ? tru : false
+        ]);
+
+        Evento::create($request->all());
+        return redirect()->away('/eventos')
+        ->with('success', 'Evento criado com sucesso');
+
     }
 
     /**
@@ -38,6 +53,8 @@ class ModeloController extends Controller
     public function show(Modelo $modelo)
     {
         //
+        return view ('eventos.show',compact('evento'));
+
     }
 
     /**
@@ -46,6 +63,8 @@ class ModeloController extends Controller
     public function edit(Modelo $modelo)
     {
         //
+        return view('eventos.edit', compact('evento'));
+
     }
 
     /**
@@ -54,6 +73,11 @@ class ModeloController extends Controller
     public function update(UpdateModeloRequest $request, Modelo $modelo)
     {
         //
+        $evento->update($request->all());
+
+        return redirect()->route('eventos.index')
+        ->with('success','Evento atualizado com sucesso');
+
     }
 
     /**
@@ -62,5 +86,10 @@ class ModeloController extends Controller
     public function destroy(Modelo $modelo)
     {
         //
+        $evento->delete();
+
+        return redirect()->rout('eventos.index')
+        ->with('success' , 'Evento removido com sucesso');
+        
     }
 }
